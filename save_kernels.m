@@ -5,7 +5,7 @@ dataset_name = 'iLIDS'; %
 num_patch = 6; %6, 14, 75, 341
 partition_name = 'Random';
 fname = [dataset_name '_HistMoment' num2str(num_patch) 'Patch_woPreFiltering.mat'];
-load([dropbox_folder '/Feature/' fname]);
+load([dropbox_folder '/' fname]);
 featurename = fieldnames(DataSet.idxfeature);
 idx_feat =[];
 for i = 1: 9
@@ -25,8 +25,8 @@ end
 X = double(DataSet.data(:, idx_feat)');
 clear DataSet;
 %% load dataset partition
-load([dropbox_folder '/Feature/' dataset_name '_Partition_' partition_name '.mat']);
-load([dropbox_folder '/Dataset/' dataset_name '_Images.mat'], 'gID', 'camID')
+load([dropbox_folder '/' dataset_name '_Partition_' partition_name '.mat']);
+load([dropbox_folder '/' dataset_name '_Images.mat'], 'gID', 'camID')
 Partition = Partition(1:10);%%
 % The number of test times with the same train/test partition.
 %addpath(genpath('F:\Toolboxes\toolbox'));
@@ -61,5 +61,5 @@ for idx_partition=1:10%:length(Partition) % partition loop
     Kd_d = K_tr_a_b([train_differentMask train_differentMask],[train_differentMask train_differentMask]);
     [Vs_all , Ds_all , ~] = svd(Js' * Ks_s * Js);
     [Vd_all , Dd_all , ~] = svd(Jd' * Kd_d * Jd);
-    save(['./matFiles/K_SVD_KKissMe_Partition' int2str(idx_partition)], '-v7.3', 'K' , 'Vs_all' , 'Ds_all' ,'Vd_all' , 'Dd_all' );
+    save(['./K_SVD_KKissMe_Partition' int2str(idx_partition)], '-v7.3', 'K' , 'Vs_all' , 'Ds_all' ,'Vd_all' , 'Dd_all' );
 end

@@ -7,14 +7,14 @@ symm = @(X) (X + X')/2;
 dataset_name = 'iLIDS';
 partition_name = 'Random';
 %% load dataset partition
-load([dropbox_folder '/Feature/' dataset_name '_Partition_' partition_name '.mat']);
-load([dropbox_folder '/Dataset/' dataset_name '_Images.mat'], 'gID', 'camID')
+load([dropbox_folder '/' dataset_name '_Partition_' partition_name '.mat']);
+load([dropbox_folder '/' dataset_name '_Images.mat'], 'gID', 'camID')
 Partition = Partition(1:10);
 %%
 np_ratio =1; % The ratio of number of negative and positive pairs. 
 energy = 0.99;  %Try different values as well
 for idx_partition=1:10
-    load(['./matFiles/K_SVD_KKissMe_Partition' int2str(idx_partition)]);
+    load(['./K_SVD_KKissMe_Partition' int2str(idx_partition)]);
     idx_train = Partition(idx_partition).idx_train ;
     idx_test = Partition(idx_partition).idx_test ;
     ix_train_neg_pair = Partition(idx_partition).idx_train_neg_pair;
@@ -71,8 +71,7 @@ for idx_partition=1:10
         Ds_inv = 1./diag(Ds);
         Dd_inv = 1./diag(Dd);
         JVd = Jd * Vd;
-        JVs = Js * Vs;
-        tic
+        JVs = Js * Vs;        
         Ad = JVd * diag((ones(ind_d,1) - 0 * Dd_inv) .* Dd_inv) * JVd';
         Ad = symm(Ad);
         As = JVs * diag((ones(ind_s,1) - 0 * Ds_inv) .* Ds_inv) * JVs';
@@ -103,8 +102,7 @@ for idx_partition=1:10
 %             Results_spd(idx_partition).energy_s(cnt) = energy_s(ind_s);
 %             Results_spd(idx_partition).energy_d(cnt) = energy_d(ind_d) ;         
             cnt = cnt + 1;
-        end
-        toc
+        end        
     end    
 end
 Split_Results = Results_cf;
